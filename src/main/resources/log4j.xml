@@ -13,7 +13,7 @@
     <appender name="fileAppender"
               class="org.apache.log4j.RollingFileAppender">
         <param name="Threshold" value="INFO"/>
-        <param name="File" value="sample.log"/>
+        <param name="File" value="guodao212.log"/>
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d %-2p  [%c{1}] %m %n"/>
         </layout>
@@ -21,7 +21,7 @@
 
     <root>
         <priority value="info"></priority>
-        <appender-ref ref="consoleAppender"/>
+        <appender-ref ref="fileAppender"/>
     </root>
 
 </log4j:configuration>
