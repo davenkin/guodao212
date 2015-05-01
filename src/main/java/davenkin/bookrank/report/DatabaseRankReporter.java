@@ -35,12 +35,14 @@ public class DatabaseRankReporter implements BookRankReporter {
     }
 
     private List<RankBook> getAllBooks() throws Exception {
-        return retryTemplate().execute(new RetryCallback<List<RankBook>>() {
+        List<RankBook> rankBooks = retryTemplate().execute(new RetryCallback<List<RankBook>>() {
             @Override
             public List<RankBook> doWithRetry(RetryContext context) throws Exception {
                 return bookRepository.allBooks();
             }
         });
+        logger.info("=============Found "+rankBooks.size()+" books to report=========");
+        return rankBooks;
     }
 
     private RetryTemplate retryTemplate() {
