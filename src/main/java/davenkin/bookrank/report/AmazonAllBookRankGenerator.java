@@ -23,7 +23,9 @@ public class AmazonAllBookRankGenerator extends AbstractBookRankGenerator {
 
     public boolean canHandle(RankBook rankBook) {
         logger.info("========="+rankBook.merchant() + " "+rankBook.category());
-        return (AMAZON.equals(rankBook.merchant()) && ALL_AMAZON_BOOK.equals(rankBook.category()));
+        boolean b = AMAZON.equals(rankBook.merchant()) && ALL_AMAZON_BOOK.equals(rankBook.category());
+        logger.info("===="+b);
+        return b;
     }
 
     public int rank(RankBook rankBook) {
