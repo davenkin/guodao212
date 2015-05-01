@@ -3,7 +3,7 @@ set -e
 
 PID=$(ps aux | grep java | grep guodao212 | grep -v grep | awk '{ print $2 }')
 if [ -n "$PID" ]; then
-   echo "Killing exiting running guodao212 process with PID [${PID}]"
+   echo "Trying to kill exiting running guodao212 process with PID [${PID}]"
    kill -9 $PID
 fi
 
