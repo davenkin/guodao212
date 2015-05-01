@@ -1,0 +1,61 @@
+apply plugin: 'idea'
+apply plugin: 'jetty'
+
+
+sourceCompatibility = 1.6
+group = 'davenkin'
+version = '1.0-SNAPSHOT'
+
+ext {
+    env = defaultProperty('env', 'local')
+}
+
+def defaultProperty(name, defaultValue) {
+    return hasProperty(name) ? project[name] : defaultValue;
+}
+
+sourceSets {
+    main {
+        resources {
+            srcDirs "environment/$env"
+        }
+    }
+}
+
+war {
+    archiveName = 'root.war'
+    destinationDir = file('.')
+}
+
+jettyRun {
+    contextPath = ''
+}
+
+repositories {
+    mavenCentral()
+}
+
+
+dependencies {
+    compile 'org.springframework:spring-webmvc:4.0.6.RELEASE'
+    compile 'log4j:log4j:1.2.17'
+    compile 'com.google.guava:guava:14.0'
+    compile 'commons-io:commons-io:2.4'
+    compile 'org.seleniumhq.webdriver:webdriver-htmlunit:0.9.7376'
+    compile 'org.seleniumhq.selenium:selenium-support:2.40.0'
+    compile 'commons-dbcp:commons-dbcp:1.4'
+    compile 'org.springframework:spring-jdbc:3.1.0.RELEASE'
+    runtime 'mysql:mysql-connector-java:5.1.20'
+    compile 'org.springframework.retry:spring-retry:1.0.3.RELEASE'
+    compile 'org.springframework.ws:spring-oxm:1.5.9'
+    runtime 'com.fasterxml.jackson.core:jackson-databind:2.4.2'
+    runtime 'com.fasterxml.jackson.core:jackson-core:2.4.2'
+    providedCompile 'javax.servlet:servlet-api:2.5'
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+

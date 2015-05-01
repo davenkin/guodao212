@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:cache="http://www.springframework.org/schema/cache"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+	   http://www.springframework.org/schema/context/spring-context.xsd
+	   http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task.xsd
+       http://www.springframework.org/schema/tx
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/cache
+       http://www.springframework.org/schema/cache/spring-cache.xsd">
+
+    <cache:annotation-driven/>
+
+    <bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean">
+                    <property name="name" value="records"/>
+                </bean>
+            </set>
+        </property>
+    </bean>
+
+    <context:property-placeholder location="classpath:application.properties"/>
+
+    <mvc:annotation-driven/>
+
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
+
+    <tx:annotation-driven/>
+
+    <context:component-scan base-package="davenkin"/>
+
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/jsp/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+
+    <task:scheduler id="reportScheduler" pool-size="10"/>
+
+    <task:scheduled-tasks scheduler="reportScheduler">
+        <task:scheduled ref="bookRankReporter" method="report" cron="${report.schedule}"/>
+        <!--<task:scheduled ref="dropboxImageService" method="fetchAllImages" cron="${images.schedule}"/>-->
+    </task:scheduled-tasks>
+
+    <bean id="bookRankReporter" class="davenkin.bookrank.report.DatabaseRankReporter">
+        <property name="bookRepository" ref="bookRepository"/>
+        <property name="bookRankerService" ref="bookRankerService"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <property name="driverClassName" value="${db.driver}"/>
+        <property name="url" value="${db.url}"/>
+        <property name="username" value="${db.user}"/>
+        <property name="password" value="${db.password}"/>
+        <property name="removeAbandoned" value="true"/>
+        <property name="initialSize" value="20" />
+        <property name="maxActive" value="50" />
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="bookRepository" class="davenkin.bookrank.repository.DatabaseBookRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="rankRecordRepository" class="davenkin.bookrank.repository.DefaultRankRecordRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="bookRankerService" class="davenkin.bookrank.report.DatabaseBookRankerService">
+        <property name="rankRecordRepository" ref="rankRecordRepository"/>
+        <property name="bookRankGenerators">
+            <list value-type="davenkin.bookrank.report.BookRankGenerator">
+                <ref bean="jdBookRankGenerator"/>
+                <ref bean="dangdangBookRankGenerator"/>
+                <ref bean="amazonSelfBookRankGenerator"/>
+                <ref bean="amazonAllBookRankGenerator"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="dropboxImageService" class="davenkin.dropbox.DropboxImageService" init-method="init">
+        <property name="initImages" value="classpath:initDropboxImages.txt"/>
+    </bean>
+
+    <bean id="jdBookRankGenerator" class="davenkin.bookrank.report.JDBookRankGenerator"/>
+    <bean id="dangdangBookRankGenerator" class="davenkin.bookrank.report.DangDangBookRankGenerator"/>
+    <bean id="amazonSelfBookRankGenerator" class="davenkin.bookrank.report.AmazonSelfBookRankGenerator"/>
+    <bean id="amazonAllBookRankGenerator" class="davenkin.bookrank.report.AmazonAllBookRankGenerator"/>
+
+    <bean id="highChartsRankRecordTransformer" class="davenkin.bookrank.model.DefaultHighChartsRankRecordTransformer"/>
+</beans>
