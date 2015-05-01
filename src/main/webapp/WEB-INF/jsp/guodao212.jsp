@@ -17,7 +17,6 @@
 <div id="top-wrapper">
     <div id="header">
         <a class="links" href="http://www.davenkin.me" target="_blank">无知者云</a>
-        <a class="links" href="" id="binfang">我和槟芳</a>
         <h2>国道212</h2>
     </div>
 
