@@ -2,5 +2,6 @@
 *.ipr
 *.iws
 build
+application.properties
 out
 .gradle
