@@ -56,12 +56,17 @@
         <task:scheduled ref="bookRankReporter" method="report" cron="${report.schedule}"/>
     </task:scheduled-tasks>
 
-    <bean id="bookRankReporter" class="davenkin.bookrank.report.DatabaseRankReporter">
+    <bean id="bookRankReporter" class="davenkin.guodao212.report.DatabaseRankReporter">
         <property name="bookRepository" ref="bookRepository"/>
         <property name="bookRankerService" ref="bookRankerService"/>
     </bean>
 
-    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+
+    <bean id="bookRepository" class="davenkin.guodao212.repository.DatabaseBookRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
@@ -75,34 +80,26 @@
         <property name="maxActive" value="50" />
     </bean>
 
-    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="bookRepository" class="davenkin.bookrank.repository.DatabaseBookRepository">
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
-    <bean id="rankRecordRepository" class="davenkin.bookrank.repository.DefaultRankRecordRepository">
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
-    <bean id="bookRankerService" class="davenkin.bookrank.report.DatabaseBookRankerService">
+    <bean id="bookRankerService" class="davenkin.guodao212.report.DatabaseBookRankerService">
         <property name="rankRecordRepository" ref="rankRecordRepository"/>
         <property name="bookRankGenerators">
-            <list value-type="davenkin.bookrank.report.BookRankGenerator">
-                <ref bean="jdBookRankGenerator"/>
-                <ref bean="dangdangBookRankGenerator"/>
+            <list value-type="davenkin.guodao212.report.BookRankGenerator">
                 <ref bean="amazonSelfBookRankGenerator"/>
                 <ref bean="amazonAllBookRankGenerator"/>
             </list>
         </property>
     </bean>
 
-    <bean id="jdBookRankGenerator" class="davenkin.bookrank.report.JDBookRankGenerator"/>
-    <bean id="dangdangBookRankGenerator" class="davenkin.bookrank.report.DangDangBookRankGenerator"/>
-    <bean id="amazonSelfBookRankGenerator" class="davenkin.bookrank.report.AmazonSelfBookRankGenerator"/>
-    <bean id="amazonAllBookRankGenerator" class="davenkin.bookrank.report.AmazonAllBookRankGenerator"/>
+    <bean id="rankRecordRepository" class="davenkin.guodao212.repository.DefaultRankRecordRepository">
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
 
-    <bean id="highChartsRankRecordTransformer" class="davenkin.bookrank.model.DefaultHighChartsRankRecordTransformer"/>
+    <bean id="amazonSelfBookRankGenerator" class="davenkin.guodao212.report.AmazonSelfBookRankGenerator"/>
+    <bean id="amazonAllBookRankGenerator" class="davenkin.guodao212.report.AmazonAllBookRankGenerator"/>
+
+    <bean id="highChartsRankRecordTransformer" class="davenkin.guodao212.model.DefaultHighChartsRankRecordTransformer"/>
 </beans>
