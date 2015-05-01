@@ -36,11 +36,22 @@ public class DefaultHighChartsRankRecordTransformer implements HighChartsRankRec
 
     private HighChartsRecord createSingleHighChartsLine(String name, String category, Collection<BookRankRecord> recordsByCategory) {
         HighChartsRecord highChartsRecord = new HighChartsRecord();
-        String nameAndCategory = name + "-" + category;
+        List<List<Long>> singleBookRecords = transformSingleHightChartsLine(recordsByCategory);
 
-        highChartsRecord.setName(nameAndCategory);
-        highChartsRecord.setData(transformSingleHightChartsLine(recordsByCategory));
+        highChartsRecord.setData(singleBookRecords);
+        highChartsRecord.setName(String.format("%s-%s(%s)", name, category, latestRank(singleBookRecords)));
+
         return highChartsRecord;
+    }
+
+    private Long latestRank(List<List<Long>> data) {
+        List<Long> latestPoint = data.get(data.size() - 1);
+        return latestPoint.get(latestPoint.size() - 1);
+    }
+
+    private String latestRank() {
+        return "dsfsd";
+
     }
 
     private ImmutableMap<String, Collection<BookRankRecord>> groupByCategory(Collection<BookRankRecord> recordsByName) {
