@@ -1,34 +1,9 @@
 apply plugin: 'idea'
 apply plugin: 'jetty'
 
-
-sourceCompatibility = 1.6
-group = 'davenkin'
-version = '1.0-SNAPSHOT'
-
-ext {
-    env = defaultProperty('env', 'local')
-}
-
-def defaultProperty(name, defaultValue) {
-    return hasProperty(name) ? project[name] : defaultValue;
-}
-
-sourceSets {
-    main {
-        resources {
-            srcDirs "environment/$env"
-        }
-    }
-}
-
-war {
-    archiveName = 'root.war'
-    destinationDir = file('.')
-}
-
 jettyRun {
     contextPath = ''
+    httpPort 80
 }
 
 repositories {
