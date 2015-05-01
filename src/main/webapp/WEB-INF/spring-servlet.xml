@@ -54,7 +54,6 @@
 
     <task:scheduled-tasks scheduler="reportScheduler">
         <task:scheduled ref="bookRankReporter" method="report" cron="${report.schedule}"/>
-        <!--<task:scheduled ref="dropboxImageService" method="fetchAllImages" cron="${images.schedule}"/>-->
     </task:scheduled-tasks>
 
     <bean id="bookRankReporter" class="davenkin.bookrank.report.DatabaseRankReporter">
@@ -98,10 +97,6 @@
                 <ref bean="amazonAllBookRankGenerator"/>
             </list>
         </property>
-    </bean>
-
-    <bean id="dropboxImageService" class="davenkin.dropbox.DropboxImageService" init-method="init">
-        <property name="initImages" value="classpath:initDropboxImages.txt"/>
     </bean>
 
     <bean id="jdBookRankGenerator" class="davenkin.bookrank.report.JDBookRankGenerator"/>

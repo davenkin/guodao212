@@ -1,8 +1,5 @@
 package davenkin.bookrank.model;
 
-import davenkin.bookrank.controller.BookRankerController;
-
-import java.util.Collection;
 import java.util.List;
 
 /**

@@ -1,2 +1,5 @@
 #!/bin/sh
-./gradlew jettyRun
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
+MYDIR=$(dirname $0)
+cd $MYDIR
+sudo ./gradlew clean jettyRun

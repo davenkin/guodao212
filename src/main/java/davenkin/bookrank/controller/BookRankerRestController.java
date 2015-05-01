@@ -25,7 +25,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
  * Created by twer on 4/27/14.
  */
 @Controller
-public class BookRankerController {
+public class BookRankerRestController {
 
     @Autowired
     private RankRecordRepository rankRecordRepository;
