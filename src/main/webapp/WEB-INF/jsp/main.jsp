@@ -6,6 +6,7 @@
     <title>国道212</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="shortcut icon" href="resources/images/212-red.ico" >
+    <link rel="apple-touch-icon" href="resources/images/favicon64x64.ico"/>
     <link rel="stylesheet" type="text/css" href="resources/css/main.css">
     <script type="text/javascript" src="http://libs.baidu.com/jquery/2.1.1/jquery.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
