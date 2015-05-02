@@ -18,7 +18,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElemen
 @Component
 public abstract class AbstractBookRankGenerator implements BookRankGenerator {
     public static final int NO_RANK = -1;
-    private static final int DEFAULT_TIME_OUT = 30;
+    private static final int DEFAULT_TIME_OUT = 60;
     protected final String merchant;
     protected final String pageReadyElementId;
     protected final String searchXpath;
