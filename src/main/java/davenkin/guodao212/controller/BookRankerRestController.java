@@ -4,6 +4,7 @@ import davenkin.guodao212.model.BookRankRecord;
 import davenkin.guodao212.model.HighChartsRankRecordTransformer;
 import davenkin.guodao212.model.HighChartsRecord;
 import davenkin.guodao212.repository.RankRecordRepository;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.retry.RetryCallback;
@@ -26,6 +27,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
  */
 @Controller
 public class BookRankerRestController {
+    private static final Logger logger = Logger.getLogger(BookRankerRestController.class);
 
     @Autowired
     private RankRecordRepository rankRecordRepository;
@@ -89,7 +91,7 @@ public class BookRankerRestController {
                 }
             });
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Exception occured: " + e.getMessage());
         }
         return null;
     }

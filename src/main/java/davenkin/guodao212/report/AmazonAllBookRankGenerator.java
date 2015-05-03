@@ -40,8 +40,6 @@ public class AmazonAllBookRankGenerator extends AbstractBookRankGenerator {
                     return rank;
                 }
             }
-        } catch (Exception e) {
-            logger.error(String.format("Exception found when finding rank for %s on %s-%s-[%s]:\n%s", rankBook.getName(), rankBook.merchant(), rankBook.category(), rankBook.getBookPageUrl(), e.getMessage()));
         } finally {
             driver.quit();
         }
