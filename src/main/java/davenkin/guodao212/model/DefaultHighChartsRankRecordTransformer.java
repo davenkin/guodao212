@@ -43,6 +43,7 @@ public class DefaultHighChartsRankRecordTransformer implements HighChartsRankRec
 
         highChartsRecord.setData(singleBookRecords);
         List<Long> lastRank = singleBookRecords.get(singleBookRecords.size() - 1);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
         highChartsRecord.setName(String.format("%s-%s(%s,%s)", name, category, latestRank(lastRank), sdf.format(latestRankDate(lastRank))));
 
         return highChartsRecord;
