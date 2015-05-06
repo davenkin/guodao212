@@ -5,12 +5,15 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Ordering;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
  * Created by Davenkin on 9/19/14.
  */
 public class DefaultHighChartsRankRecordTransformer implements HighChartsRankRecordTransformer {
+
+    private final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public List<HighChartsRecord> transform(List<BookRankRecord> records) {
@@ -39,18 +42,17 @@ public class DefaultHighChartsRankRecordTransformer implements HighChartsRankRec
         List<List<Long>> singleBookRecords = transformSingleHightChartsLine(recordsByCategory);
 
         highChartsRecord.setData(singleBookRecords);
-        highChartsRecord.setName(String.format("%s-%s(%s,%s)", name, category, latestRank(singleBookRecords),new Date(latestRankDate(singleBookRecords))));
+        List<Long> lastRank = singleBookRecords.get(singleBookRecords.size() - 1);
+        highChartsRecord.setName(String.format("%s-%s(%s,%s)", name, category, latestRank(lastRank), sdf.format(latestRankDate(lastRank))));
 
         return highChartsRecord;
     }
 
-    private Long latestRank(List<List<Long>> data) {
-        List<Long> latestPoint = data.get(data.size() - 1);
-        return latestPoint.get(latestPoint.size() - 1);
+    private Long latestRank(List<Long> lastRank) {
+        return lastRank.get(lastRank.size() - 1);
     }
-    private Long latestRankDate(List<List<Long>> data) {
-        List<Long> latestPoint = data.get(data.size() - 1);
-        return latestPoint.get(0);
+    private Long latestRankDate(List<Long> lastRank) {
+        return lastRank.get(0);
     }
 
     private ImmutableMap<String, Collection<BookRankRecord>> groupByCategory(Collection<BookRankRecord> recordsByName) {
