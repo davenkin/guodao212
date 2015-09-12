@@ -33,25 +33,6 @@
                     <li><a id="dangdang-all" href="">当当-全部</a></li>
                 </ul>
             </li>
-            <li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/">Spring</a>
-                <ul>
-                    <li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/beans.html">Spring IoC</a></li>
-                    <li><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/html/spring-web.html">Spring MVC</a></li>
-                    <li><a href="http://docs.spring.io/spring-batch/trunk/reference/html/spring-batch-intro.html">Spring Batch</a></li>
-                    <li><a href="http://docs.spring.io/spring-ws/site/reference/html/">Spring Web Service</a></li>
-                </ul>
-            </li>
-            <li><a href="http://www.w3schools.com/html/html5_intro.asp">HTML5</a>
-                <ul>
-                    <li><a href="http://code.tutsplus.com/tutorials/28-html5-features-tips-and-techniques-you-must-know--net-13520">HTML5 New Features</a></li>
-                    <li><a href="https://developer.mozilla.org/en/docs/Web/Guide/HTML/HTML5/HTML5_element_list">HTML5 Element List</a></li>
-                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Using_HTML5_audio_and_video">HTML5 Audio&Video</a></li>
-                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial">HTML5 Canvas</a></li>
-                    <li><a href="https://developer.mozilla.org/en/docs/Web/Guide/API/DOM/Storage">HTML5 Web Storage</a></li>
-                    <li><a href="http://www.tutorialspoint.com/html5/">HTML5 TutorialPoint</a></li>
-                    <li><a href="http://www.html5rocks.com/en/tutorials/websockets/basics/">HTML5 Web Socket</a></li>
-                </ul>
-            </li>
             <li><a href="http://www.w3schools.com/css/css3_intro.asp">CSS3</a>
                 <ul>
                     <li><a href="http://tutorialzine.com/2013/10/12-awesome-css3-features-you-can-finally-use/">CSS3 New Features</a></li>
