@@ -10,4 +10,4 @@ fi
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF8
 MYDIR=$(dirname $0)
 cd $MYDIR
-./gradlew clean jettyRun 
+nohup ./gradlew clean jettyRun > guodao212.log 2>&1 & 
