@@ -49,7 +49,8 @@ public class BookRankerRestController {
             return retry(new SearchExcecutor() {
                 @Override
                 public List<BookRankRecord> execute() {
-                    return rankRecordRepository.allRecords();
+                    List<BookRankRecord> bookRankRecords = rankRecordRepository.allRecords();
+                    return bookRankRecords.subList(bookRankRecords.size() - 200, bookRankRecords.size() - 1);
                 }
             });
         }
