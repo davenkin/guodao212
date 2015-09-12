@@ -3,6 +3,5 @@
 *.iws
 *.log
 build
-application.properties
 out
 .gradle
