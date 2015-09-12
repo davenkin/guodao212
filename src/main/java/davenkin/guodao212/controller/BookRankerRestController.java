@@ -46,7 +46,7 @@ public class BookRankerRestController {
 
     private List<BookRankRecord> getNewest200Records(String name, String category) {
         List<BookRankRecord> bookRankRecords = getRecords(name, category);
-        return bookRankRecords.subList(bookRankRecords.size() - 200, bookRankRecords.size() - 1);
+        return bookRankRecords.subList(0, 199);
     }
 
     private List<BookRankRecord> getRecords(final String name, final String category) {
