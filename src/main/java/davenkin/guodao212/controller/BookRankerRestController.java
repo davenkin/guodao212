@@ -41,7 +41,12 @@ public class BookRankerRestController {
     public List<HighChartsRecord> bookRanks(@RequestParam(required = false, value = "name") String name,
                                             @RequestParam(required = false, value = "category") String category) {
 
-        return highChartsRankRecordTransformer.transform(getRecords(name, category));
+        return highChartsRankRecordTransformer.transform(getNewest200Records(name, category));
+    }
+
+    private List<BookRankRecord> getNewest200Records(String name, String category) {
+        List<BookRankRecord> bookRankRecords = getRecords(name, category);
+        return bookRankRecords.subList(bookRankRecords.size() - 200, bookRankRecords.size() - 1);
     }
 
     private List<BookRankRecord> getRecords(final String name, final String category) {
@@ -49,8 +54,7 @@ public class BookRankerRestController {
             return retry(new SearchExcecutor() {
                 @Override
                 public List<BookRankRecord> execute() {
-                    List<BookRankRecord> bookRankRecords = rankRecordRepository.allRecords();
-                    return bookRankRecords.subList(bookRankRecords.size() - 200, bookRankRecords.size() - 1);
+                    return rankRecordRepository.allRecords();
                 }
             });
         }
